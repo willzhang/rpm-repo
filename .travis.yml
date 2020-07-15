@@ -26,6 +26,7 @@ script:
    yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux &&
    yum install -y --downloadonly --downloaddir=/rpms createrepo &&
    yum clean all &&
+   yum install -y createrepo &&
    createrepo /rpms"
   
 - sudo chmod -R 755 ${PWD}/rpms
