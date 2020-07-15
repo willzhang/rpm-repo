@@ -21,7 +21,7 @@ script:
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&
    curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo &&
    mkdir -p /rpms/ &&
-   yum install -y $(cat requirement.txt) &&
+   yum install -y $(cat requirements.txt) &&
    yum clean all &&
    createrepo /rpms"
   
