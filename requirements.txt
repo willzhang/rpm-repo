@@ -1,0 +1,6 @@
+docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-compose
+vim wget chrony rsync jq git tcpdump nc net-tools perl unzip
+python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible
+centos-release-openstack-train
+centos-release-openstack-train python-openstackclient openstack-selinux
+createrepo
