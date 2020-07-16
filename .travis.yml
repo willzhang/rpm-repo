@@ -11,6 +11,7 @@ env:
 
 before_install:
 - docker pull centos:${CENTOS_VERSION}
+- while sleep 5m; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
    
 script:
 - >
