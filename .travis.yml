@@ -20,7 +20,7 @@ script:
    yum install -y centos-release-openstack-train &&
    mkdir -p /rpms/ &&
    reposync -p /rpms &&
-   for file in $(ls rpms);do createrepo /rpms/$file;done"
+   for file in $(ls /rpms);do createrepo /rpms/$file;done"
   
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
