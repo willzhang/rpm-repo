@@ -19,7 +19,7 @@ before_install:
    
 install: 
 >-
-  docker run -t --rm -v ${PWD}/rpms:/rpms centos:${CENTOS_VERSION}
+  docker run -t --rm -v /tmp/rpms:/rpms centos:${CENTOS_VERSION}
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
    && yum install -y centos-release-openstack-train \
@@ -32,8 +32,8 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 before_script:
-  - sudo chmod -R 777 ${PWD}/rpms
-  - createrepo ${PWD}/rpms
+#  - sudo chmod -R 777 ${PWD}/rpms
+  - createrepo /tmp/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
 
 script:
