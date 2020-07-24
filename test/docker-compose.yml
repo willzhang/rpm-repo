@@ -19,4 +19,4 @@ services:
     depends_on:
       - yum-repo-server
     volumes:
-      - "${PWD}/local.repo:/etc/yum.repos.d/"
+      - "${PWD}/local.repo:/etc/yum.repos.d/local.repo"
