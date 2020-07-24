@@ -35,8 +35,8 @@ after_script:
 deploy:
   provider: script
   script: 
-    - docker-compose -f test/docker-compose.yml up -d
-    - docker exec -it yum-repo-client yum install -y docker
+    - bash docker-compose -f test/docker-compose.yml up -d
+    - bash docker exec -it yum-repo-client yum install -y docker
 
 after_success:  
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
