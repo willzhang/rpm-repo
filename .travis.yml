@@ -9,7 +9,7 @@ env:
    - DOCKER_VERSION=19.03.12-3
    - DOCKER_TAG=v1.0
 
-before_install:
+before_script:
   - sudo apt-get -y install createrepo
   - docker pull centos:${CENTOS_VERSION}
    
