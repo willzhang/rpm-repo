@@ -1,7 +1,8 @@
-sudo: required
+dist: bionic
+language: shell
 
 services:
-- docker
+  - docker
 
 env:
  global:
@@ -10,7 +11,8 @@ env:
    - DOCKER_TAG=v1.0
 
 before_install:
-- docker pull centos:${CENTOS_VERSION}
+  - sudo apt-get -y install createrepo
+  - docker pull centos:${CENTOS_VERSION}
    
 script:
 - >
@@ -24,10 +26,10 @@ script:
    yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip &&
    yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible &&
    yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux &&
-   yum install -y --downloadonly --downloaddir=/rpms createrepo &&
-   yum clean all &&
-   yum install -y createrepo &&
-   createrepo /rpms"
+   yum install -y --downloadonly --downloaddir=/rpms createrepo"
+
+after_script:
+  - createrepo ${PWD}/rpms
   
 - sudo chmod -R 755 ${PWD}/rpms
 - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
