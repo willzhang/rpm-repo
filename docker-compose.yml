@@ -13,6 +13,7 @@ services:
              
   yum-repo-client:
     image: centos:${CENTOS_VERSION}
+    container_name: yum-repo-client
     command: sleep infinity
     environment:
       CENTOS_VERSION:
