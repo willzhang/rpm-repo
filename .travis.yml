@@ -31,5 +31,11 @@ after_script:
   - sudo chmod -R 755 ${PWD}/rpms
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
+  
+deploy:
+  - docker-compose up -d
+  - docker exec -it yum-repo-client yum install -y docker
+
+after_success:  
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push willdockerhub/yum-repo:$DOCKER_TAG
