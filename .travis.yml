@@ -32,8 +32,6 @@ install:
 
 before_script:
   - sudo chmod -R a+w ${PWD}/rpms
-  - ls -l ${PWD}/rpms
-  - ls -l ${PWD}
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
 
