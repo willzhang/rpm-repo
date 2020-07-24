@@ -3,7 +3,7 @@
 
 ## Yum Repo for Docker/K8S/NFS installation
 
-usage:
+usage1:
 
 YUM Repo服务器安装好docker，直接运行命令：
 ```shell
