@@ -36,6 +36,7 @@ after_script:
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
   - docker-compose up -d
+  - docker-compose ps
   - docker exec -it yum-repo-client yum install -y docker-ce
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push willdockerhub/yum-repo:$DOCKER_TAG
