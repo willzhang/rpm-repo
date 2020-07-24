@@ -32,7 +32,10 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 before_script:
-#  - sudo chmod -R 777 ${PWD}/rpms
+  - ls -l /tmp/
+  - ls -l /tmp/rpms
+  - sudo chmod -R 766 /tmp/rpms
+  - ls -l /tmp/rpms
   - createrepo /tmp/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
 
