@@ -30,8 +30,7 @@ script:
 
 after_script:
   - createrepo ${PWD}/rpms
-  
-- sudo chmod -R 755 ${PWD}/rpms
-- docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
-- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push willdockerhub/yum-repo:$DOCKER_TAG
+  - sudo chmod -R 755 ${PWD}/rpms
+  - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - docker push willdockerhub/yum-repo:$DOCKER_TAG
