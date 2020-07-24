@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+
+  yum-repo-server:
+    image: willdockerhub/yum-repo:$DOCKER_TAG
+    container_name: yum-repo-server
+    restart: always
+    ports:
+      - "2009"
+    environment:
+      DOCKER_TAG:
+             
+  yum-repo-client:
+    image: centos:${CENTOS_VERSION}
+    command: sleep infinity
+    environment:
+      CENTOS_VERSION:
+    depends_on:
+      - yum-repo-server
+    volumes:
+      - "${PWD}/repo/:/etc/yum.repos.d/"
