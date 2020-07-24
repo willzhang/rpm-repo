@@ -35,7 +35,7 @@ after_success:
   - sudo chmod -R 755 ${PWD}/rpms
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
-  - docker-compose -f test/docker-compose.yml up -d
+  - docker-compose up -d
   - docker exec -it yum-repo-client yum install -y docker
 
 after_script:
