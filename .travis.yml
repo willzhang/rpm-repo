@@ -31,12 +31,12 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
-before_script
+before_script:
   - sudo chmod -R 777 ${PWD}/rpms
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
 
-script
+script:
   - docker-compose up -d
   - docker-compose ps
   - docker exec -it yum-repo-client yum install -y docker-ce
