@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/willzhang/yumrepo.svg?branch=master)](https://travis-ci.com/willzhang/yumrepo)
+
+
 ## Yum Repo for Docker/K8S/NFS installation
 
 usage:
