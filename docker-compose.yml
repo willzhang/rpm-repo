@@ -7,7 +7,7 @@ services:
     container_name: yum-repo-server
     restart: always
     ports:
-      - "2009"
+      - "2009:2009"
     environment:
       DOCKER_TAG:
              
