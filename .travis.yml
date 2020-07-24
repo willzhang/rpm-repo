@@ -32,16 +32,13 @@ jobs:
          && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
          && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
          && yum install -y --downloadonly --downloaddir=/rpms createrepo"
-
       script: - >
         sudo chmod -R 755 ${PWD}/rpms
         createrepo ${PWD}/rpms
         docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
-
       script: - >		
         docker-compose -f test/docker-compose.yml up -d
         docker exec -it yum-repo-client yum install -y docker
-
     - stage: push image
       script: - >
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
