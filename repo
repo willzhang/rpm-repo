@@ -1,0 +1,5 @@
+[local]
+name=local
+baseurl=http://yum-repo-server:2009/rpms
+enabled=1
+gpgcheck=0
