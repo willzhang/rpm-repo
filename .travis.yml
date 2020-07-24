@@ -16,25 +16,33 @@ env:
 before_script:
   - sudo apt-get -y install createrepo
   - docker pull centos:${CENTOS_VERSION}
-   
-script: >-
-  docker run -t --rm -v ${PWD}/rpms:/rpms centos:${CENTOS_VERSION}
-  bash -c
-  "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-   && yum install -y centos-release-openstack-train \
-   && curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo \
-   && mkdir -p /rpms/ \
-   && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-compose \
-   && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
-   && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
-   && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
-   && yum install -y --downloadonly --downloaddir=/rpms createrepo"
-  sudo chmod -R 755 ${PWD}/rpms
-  createrepo ${PWD}/rpms
-  docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
-  docker-compose -f test/docker-compose.yml up -d
-  docker exec -it yum-repo-client yum install -y docker
 
-after_script:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - docker push willdockerhub/yum-repo:$DOCKER_TAG
+jobs:
+  include:
+    - stage: download and test
+      script: >-
+        docker run -t --rm -v ${PWD}/rpms:/rpms centos:${CENTOS_VERSION}
+        bash -c
+        "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+         && yum install -y centos-release-openstack-train \
+         && curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo \
+         && mkdir -p /rpms/ \
+         && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-compose \
+         && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
+         && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
+         && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
+         && yum install -y --downloadonly --downloaddir=/rpms createrepo"
+		 
+      script: >-
+        sudo chmod -R 755 ${PWD}/rpms
+        createrepo ${PWD}/rpms
+        docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
+		
+      script: >-		
+        docker-compose -f test/docker-compose.yml up -d
+        docker exec -it yum-repo-client yum install -y docker
+		
+    - stage: push image
+      script: >-
+        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        docker push willdockerhub/yum-repo:$DOCKER_TAG
