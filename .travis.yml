@@ -1,8 +1,11 @@
-#
-os: linux
 dist: bionic
+
+sudo: required
+
 language: shell
-services: docker
+
+services: 
+  - docker
 
 env:
  global:
@@ -27,7 +30,8 @@ script:
    && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
    && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
-after_script:
+
+after_success:
   - sudo chmod -R 755 ${PWD}/rpms
   - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
@@ -35,9 +39,9 @@ after_script:
 deploy:
   provider: script
   script: 
-    - bash docker-compose -f test/docker-compose.yml up -d
-    - bash docker exec -it yum-repo-client yum install -y docker
+    - docker-compose -f test/docker-compose.yml up -d
+    - docker exec -it yum-repo-client yum install -y docker
 
-after_success:  
+after_script:  
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push willdockerhub/yum-repo:$DOCKER_TAG
