@@ -1,8 +1,7 @@
+os: linux
 dist: bionic
 language: shell
-
-services:
-  - docker
+services: docker
 
 env:
  global:
@@ -29,8 +28,8 @@ script:
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 after_script:
-  - createrepo ${PWD}/rpms
   - sudo chmod -R 755 ${PWD}/rpms
+  - createrepo ${PWD}/rpms
   - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker push willdockerhub/yum-repo:$DOCKER_TAG
