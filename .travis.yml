@@ -24,7 +24,8 @@ install:
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
    && yum install -y centos-release-openstack-train \
    && curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo \
-   && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 docker-compose \
+   && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io \
+   && yum install -y --downloadonly --downloaddir=/rpms docker-compose \
    && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
    && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
    && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
