@@ -11,7 +11,7 @@ env:
  global:
    - CENTOS_VERSION=7.7.1908
    - DOCKER_VERSION=19.03.12-3
-   - DOCKER_TAG=v1.0
+   - DOCKER_TAG=redis
 
 before_install:
   - sudo apt-get -y install createrepo
@@ -22,7 +22,8 @@ install:
   docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/repo/nginx.repo:/etc/yum.repos.d/nginx.repo centos:${CENTOS_VERSION}
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-   && rpm -Uvh https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm \
+   && yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
+   && yum install -y https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm \
    && yum install -y yum-utils \
    && yum-config-manager --disable mysql80-community \
    && yum-config-manager --enable mysql57-community \
@@ -30,7 +31,8 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io \
    && yum install -y --downloadonly --downloaddir=/rpms docker-compose \
    && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
-   && yum install -y --downloadonly --downloaddir=/rpms nginx mysql-community-server redis java-11-openjdk-devel ansible \
+   && yum install -y --downloadonly --downloaddir=/rpms nginx mysql-community-server java-11-openjdk-devel ansible \
+   && yum --enablerepo=remi install -y --downloadonly --downloaddir=/rpms redis \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 before_script:
