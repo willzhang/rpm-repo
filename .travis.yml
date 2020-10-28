@@ -24,6 +24,7 @@ install:
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
    && rpm -Uvh https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm \
    && yum install -y yum-utils \
+   && yum-config-manager --disable mysql80-community \
    && yum-config-manager --enable mysql57-community \
    && curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo \
    && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io \
