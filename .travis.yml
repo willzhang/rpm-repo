@@ -9,7 +9,7 @@ services:
 
 env:
  global:
-   - CENTOS_VERSION=7.8.2003
+   - CENTOS_VERSION=7.7.1908
    - DOCKER_VERSION=19.03.12-3
    - DOCKER_TAG=v1.0
 
@@ -19,16 +19,17 @@ before_install:
    
 install: 
 >-
-  docker run -t --rm -v ${PWD}/rpms:/rpms centos:${CENTOS_VERSION}
+  docker run -t --rm -v ${PWD}/rpms:/rpms -v ${PWD}/repo/nginx.repo:/etc/yum.repos.d/nginx.repo centos:${CENTOS_VERSION}
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-   && yum install -y centos-release-openstack-train \
+   rpm -Uvh https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm \
+   yum install -y yum-utils \
+   yum-config-manager --enable mysql57-community \
    && curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo \
    && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io \
    && yum install -y --downloadonly --downloaddir=/rpms docker-compose \
    && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
-   && yum install -y --downloadonly --downloaddir=/rpms python-pip python-devel libffi-devel gcc openssl-devel libselinux-python ansible \
-   && yum install -y --downloadonly --downloaddir=/rpms centos-release-openstack-train python-openstackclient openstack-selinux \
+   && yum install -y --downloadonly --downloaddir=/rpms nginx mysql57-community redis java-11-openjdk-devel ansible \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 before_script:
