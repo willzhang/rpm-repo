@@ -23,7 +23,7 @@ install:
   bash -c
   "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
    && yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
-   && yum install -y https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm \
+   && yum install -y http://rpms.remirepo.net/store/redis/4.0.11/redis-4.0.11-1.el7.remi.x86_64.rpm \
    && yum install -y yum-utils \
    && yum-config-manager --disable mysql80-community \
    && yum-config-manager --enable mysql57-community \
