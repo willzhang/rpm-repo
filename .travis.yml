@@ -11,9 +11,15 @@ env:
  global:
    - CENTOS_VERSION=7.7.1908
    - DOCKER_VERSION=19.03.12-3
-   - DOCKER_TAG=redis
+   - DOCKER_TAG=nginx
+   - DOCKERHUB_USERNAME=willdockerhub
+   - ALI_USERNAME=willzhmic@outlook.com
+   - ALI_REGISTRY_URL=registry.cn-shenzhen.aliyuncs.com
+   - ALI_REGISTRY_NAMESPACE=images_mirror   
 
 before_install:
+  - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+  - echo "$ALI_PASSWORD" | docker login "$ALI_REGISTRY_URL" -u "$ALI_USERNAME" --password-stdin
   - sudo apt-get -y install createrepo
   - docker pull centos:${CENTOS_VERSION}
    
@@ -38,13 +44,9 @@ install:
 before_script:
   - sudo chmod -R a+w ${PWD}/rpms
   - createrepo ${PWD}/rpms
-  - docker build -t willdockerhub/yum-repo:$DOCKER_TAG .
+  - docker build -t $DOCKERHUB_USERNAME/yum-repo:$DOCKER_TAG .
+  - docker build -t $ALI_REGISTRY_URL/$ALI_REGISTRY_NAMESPACE/yum-repo:$DOCKER_TAG .
 
 script:
-  - docker-compose up -d
-  - docker-compose ps
-  - docker exec -it yum-repo-client yum install -y docker-ce
-
-after_script:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - docker push willdockerhub/yum-repo:$DOCKER_TAG
+  - docker push $DOCKERHUB_USERNAME/yum-repo:$DOCKER_TAG
+  - docker push $ALI_REGISTRY_URL/$ALI_REGISTRY_NAMESPACE/yum-repo:$DOCKER_TAG
