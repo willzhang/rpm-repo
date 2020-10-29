@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation</title>
+<title> Yum Repo for local installation</title>
 <style>
     body {
         width: 35em;
@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-<h1>Wise2C Yum Repo for Docker/K8S/Ceph/NFS installation</h1>
+<h1>Yum Repo for local installatio</h1>
 <p>If you see this page, the nginx web server is successfully installed and
 working. Further configuration is required.</p>
 
@@ -30,15 +30,15 @@ Commercial support is available at
 <br />
 <br />
 
-<p><em>Please create the file wise2c.repo as below and then move to /etc/yum.repos.d/</em></p>
+<p><em>Please create the file local.repo as below and then move to /etc/yum.repos.d/</em></p>
 
 <script type="text/javascript">
   var ip = location.host;
   var comment = "###############################################";
   document.write(comment.fontcolor("Red"));
   document.write("<pm><em></em></p>");
-  document.write("[wise2c]"+"<br>");
-  document.write("name=wise2c"+"<br>");
+  document.write("[local]"+"<br>");
+  document.write("name=local"+"<br>");
   document.write("baseurl=http://"+(ip)+"/rpms"+"<br>");
   document.write("enabled=1"+"<br>");
   document.write("gpgcheck=0"+"<br>");
