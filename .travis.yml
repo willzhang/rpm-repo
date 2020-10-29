@@ -31,7 +31,7 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms docker-ce-${DOCKER_VERSION}.el7.x86_64 docker-ce-cli-${DOCKER_VERSION}.el7.x86_64 containerd.io \
    && yum install -y --downloadonly --downloaddir=/rpms docker-compose \
    && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip \
-   && yum install -y --downloadonly --downloaddir=/rpms nginx mysql-community-server java-11-openjdk-devel ansible \
+   && yum install -y --downloadonly --downloaddir=/rpms nginx mysql-community-server java-11-openjdk-devel ansible nfs-utils \
    && yum --enablerepo=remi install -y --downloadonly --downloaddir=/rpms redis \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
