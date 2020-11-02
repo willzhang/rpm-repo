@@ -38,7 +38,7 @@ install:
    && yum install -y --downloadonly --downloaddir=/rpms docker-compose \
    && yum install -y --downloadonly --downloaddir=/rpms vim wget chrony rsync jq git tcpdump nc net-tools perl unzip gcc yum-utils \
    && yum install -y --downloadonly --downloaddir=/rpms nginx mysql-community-server java-11-openjdk-devel ansible nfs-utils keepalived haproxy \
-   && yum --enablerepo=remi install -y --downloadonly --downloaddir=/rpms redis zlib-devel openssl-devel \
+   && yum --enablerepo=remi install -y --downloadonly --downloaddir=/rpms redis zlib-devel openssl-devel libaio numactl \
    && yum install -y --downloadonly --downloaddir=/rpms createrepo"
 
 before_script:
